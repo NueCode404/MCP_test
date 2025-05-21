@@ -1,21 +1,104 @@
 const db = require('../config/db');
 
 class User {
-  // 取得所有使用者
+  // 取得所有使用者 (只返回未刪除的)
   static async getAllUsers() {
     try {
-      const [rows] = await db.query('SELECT * FROM user ORDER BY name');
+      const [rows] = await db.query('SELECT * FROM user WHERE deleted = 0 ORDER BY id');
       return rows;
     } catch (error) {
       throw error;
     }
   }
 
-  // 根據ID取得單一使用者
+  // 根據ID取得單一使用者 (只返回未刪除的)
   static async getUserById(userId) {
     try {
-      const [rows] = await db.query('SELECT * FROM user WHERE id = ?', [userId]);
+      const [rows] = await db.query('SELECT * FROM user WHERE id = ? AND deleted = 0', [userId]);
       return rows[0];
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  // 創建新使用者
+  static async createUser(userData) {
+    try {
+      const { name, email, phone } = userData;
+      const [result] = await db.query(
+        'INSERT INTO user (name, email, phone, deleted) VALUES (?, ?, ?, 0)',
+        [name, email, phone]
+      );
+      
+      return {
+        id: result.insertId,
+        name,
+        email,
+        phone,
+        deleted: 0
+      };
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  // 更新使用者
+  static async updateUser(userId, userData) {
+    try {
+      const { name, email, phone } = userData;
+      
+      // 先檢查使用者是否存在且未被刪除
+      const user = await this.getUserById(userId);
+      if (!user) return null;
+      
+      // 更新使用者資料
+      await db.query(
+        'UPDATE user SET name = ?, email = ?, phone = ? WHERE id = ? AND deleted = 0',
+        [name, email, phone, userId]
+      );
+      
+      return { id: userId, name, email, phone, deleted: 0 };
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  // 軟刪除使用者 (設置deleted = 1)
+  static async deleteUser(userId) {
+    try {
+      // 先檢查使用者是否存在且未被刪除
+      const user = await this.getUserById(userId);
+      if (!user) return false;
+      
+      // 軟刪除使用者 (設置deleted標記)
+      await db.query('UPDATE user SET deleted = 1 WHERE id = ?', [userId]);
+      return true;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  // 恢復已刪除的使用者
+  static async restoreUser(userId) {
+    try {
+      // 檢查使用者是否存在 (包括已刪除的)
+      const [rows] = await db.query('SELECT * FROM user WHERE id = ?', [userId]);
+      const user = rows[0];
+      if (!user) return false;
+      
+      // 恢復使用者 (設置deleted = 0)
+      await db.query('UPDATE user SET deleted = 0 WHERE id = ?', [userId]);
+      return true;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  // 永久刪除使用者 (僅供系統管理使用)
+  static async permanentlyDeleteUser(userId) {
+    try {
+      await db.query('DELETE FROM user WHERE id = ?', [userId]);
+      return true;
     } catch (error) {
       throw error;
     }

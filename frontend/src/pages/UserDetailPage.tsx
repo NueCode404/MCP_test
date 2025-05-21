@@ -15,7 +15,7 @@ const UserDetailPage: React.FC = () => {
       try {
         if (id) {
           const data = await userApi.getUserById(parseInt(id));
-          setUser(data);
+          setUser(data as UserDetail);
         }
         setLoading(false);
       } catch (err) {

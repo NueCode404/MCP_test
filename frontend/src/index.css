@@ -1,5 +1,6 @@
 /* 全局樣式 */
 :root {
+  /* 亮色模式變量 */
   --primary: #64b5f6;
   --primary-light: #9be7ff;
   --primary-dark: #2286c3;
@@ -16,6 +17,29 @@
   --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   --shadow-hover: 0 10px 15px rgba(0, 0, 0, 0.15);
   --transition: all 0.3s ease;
+  --footer-bg: #2286c3;
+  --border-color: rgba(0, 0, 0, 0.1);
+}
+
+/* 深色模式變量 */
+.dark-mode {
+  --primary: #1a73e8;
+  --primary-light: #3c84e4;
+  --primary-dark: #0d47a1;
+  --secondary: #ffab40;
+  --secondary-light: #ffbf69;
+  --secondary-dark: #c87921;
+  --accent: #ff5252;
+  --text-primary: #e0e0e0;
+  --text-secondary: #b0bec5;
+  --background: #121212;
+  --card-bg: #1e1e1e;
+  --success: #4caf50;
+  --info: #29b6f6;
+  --shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  --shadow-hover: 0 10px 15px rgba(0, 0, 0, 0.4);
+  --footer-bg: #0d47a1;
+  --border-color: rgba(255, 255, 255, 0.1);
 }
 
 * {
@@ -29,6 +53,7 @@ body {
   background-color: var(--background);
   color: var(--text-primary);
   line-height: 1.6;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 a {
@@ -46,4 +71,36 @@ a:hover {
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
+}
+
+/* 主題切換按鈕 */
+.theme-toggle-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.2rem;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(255, 255, 255, 0.1);
+  transition: var(--transition);
+}
+
+.theme-toggle-btn:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  transform: rotate(15deg);
+}
+
+/* 深色模式動畫 */
+.dark-mode .app {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0.8; }
+  to { opacity: 1; }
 } 

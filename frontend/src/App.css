@@ -3,24 +3,41 @@
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* 主要內容區域 */
 main {
   flex-grow: 1;
+  padding: 20px 0;
+  animation: fadeUp 0.5s ease-out;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* 頁尾 */
 .footer {
-  background-color: var(--primary-dark);
+  background-color: var(--footer-bg);
   color: white;
   padding: 1.5rem 0;
   margin-top: auto;
+  box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
 }
 
 .footer .container {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
   flex-wrap: wrap;
   gap: 1rem;
@@ -30,12 +47,27 @@ main {
   font-weight: 300;
 }
 
+.disclaimer {
+  font-size: 0.9rem;
+  text-align: center;
+  font-style: italic;
+  margin-top: 0.5rem;
+  color: rgba(255, 255, 255, 0.9);
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  padding-top: 0.5rem;
+  width: 100%;
+}
+
 /* 導航欄 */
 .navbar {
   background-color: var(--primary);
   color: white;
   padding: 1rem 0;
   box-shadow: var(--shadow);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .navbar .container {
@@ -55,18 +87,25 @@ main {
 
 .navbar-brand i {
   font-size: 1.8rem;
+  transition: transform 0.3s ease;
+}
+
+.navbar-brand:hover i {
+  transform: rotate(15deg);
 }
 
 .navbar-nav {
   display: flex;
   gap: 1.5rem;
   list-style: none;
+  align-items: center;
 }
 
 .nav-link {
   color: white;
   font-weight: 500;
   position: relative;
+  padding: 5px 0;
 }
 
 .nav-link::after {
@@ -82,4 +121,63 @@ main {
 
 .nav-link:hover::after {
   width: 100%;
+}
+
+/* 卡片樣式 */
+.card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+  border: 1px solid var(--border-color);
+}
+
+.dark-mode .card {
+  border-color: var(--border-color);
+}
+
+.card:hover {
+  transform: translateY(-10px) scale(1.02);
+}
+
+/* 按鈕懸停效果 */
+button {
+  transition: transform 0.2s ease, opacity 0.2s ease, background-color 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+button::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 5px;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.5);
+  opacity: 0;
+  border-radius: 100%;
+  transform: scale(1, 1) translate(-50%, -50%);
+  transform-origin: 50% 50%;
+}
+
+button:focus:not(:active)::after {
+  animation: ripple 0.6s ease-out;
+}
+
+@keyframes ripple {
+  0% {
+    opacity: 0.6;
+    transform: scale(0, 0) translate(-50%, -50%);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(20, 20) translate(-50%, -50%);
+  }
+}
+
+/* 深色模式特定樣式 */
+.dark-mode .navbar {
+  background-color: var(--primary-dark);
+}
+
+.dark-mode .card-img {
+  background: linear-gradient(135deg, var(--primary-light), var(--primary));
 } 

@@ -1,19 +1,20 @@
 {
-  "name": "business-card-backend",
+  "name": "vibe-coding-card-backend",
   "version": "1.0.0",
-  "description": "台灣用戶名片系統後端",
+  "description": "Vibe Coding 測試名片系統後端",
   "main": "src/index.js",
   "scripts": {
     "start": "node src/index.js",
     "dev": "nodemon src/index.js"
   },
-  "keywords": ["express", "api", "taiwantes-card"],
+  "keywords": ["express", "api", "vibe-coding", "business-card"],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.2",
     "mysql2": "^3.6.1"
   },
   "devDependencies": {
