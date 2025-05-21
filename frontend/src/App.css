@@ -1,0 +1,85 @@
+/* App 整體佈局 */
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* 主要內容區域 */
+main {
+  flex-grow: 1;
+}
+
+/* 頁尾 */
+.footer {
+  background-color: var(--primary-dark);
+  color: white;
+  padding: 1.5rem 0;
+  margin-top: auto;
+}
+
+.footer .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.footer-text {
+  font-weight: 300;
+}
+
+/* 導航欄 */
+.navbar {
+  background-color: var(--primary);
+  color: white;
+  padding: 1rem 0;
+  box-shadow: var(--shadow);
+}
+
+.navbar .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar-brand {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.navbar-brand i {
+  font-size: 1.8rem;
+}
+
+.navbar-nav {
+  display: flex;
+  gap: 1.5rem;
+  list-style: none;
+}
+
+.nav-link {
+  color: white;
+  font-weight: 500;
+  position: relative;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: white;
+  transition: var(--transition);
+}
+
+.nav-link:hover::after {
+  width: 100%;
+} 
